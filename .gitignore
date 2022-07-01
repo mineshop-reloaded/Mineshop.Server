@@ -201,3 +201,4 @@ healthchecksdb
 MigrationBackup/
 .ionide/
 FodyWeavers.xsd
+*.DotSettings
