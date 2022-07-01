@@ -21,7 +21,13 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
+        #region Services
+
         services.AddControllers();
+
+        #endregion
+
+        #region Mapper
 
         var mapperConfiguration = new MapperConfiguration(configuration =>
         {
@@ -31,13 +37,25 @@ public class Startup
         var mapper = mapperConfiguration.CreateMapper();
         services.AddSingleton(mapper);
 
+        #endregion
+
+        #region Database Connection
+
         services.AddDbContext<MineshopContext>(options =>
         {
             options.UseNpgsql(Configuration.GetConnectionString("Default"));
         });
 
+        #endregion
+
+        #region Dependency Injection
+
         services.AddScoped<IServerService, ServerService>();
         services.AddScoped<IServerRepository, ServerRepository>();
+
+        #endregion
+
+        #region Swagger
 
         services.AddSwaggerGen(options =>
         {
@@ -47,6 +65,8 @@ public class Startup
                 Version = "v1"
             });
         });
+
+        #endregion
     }
 
     public void Configure(IApplicationBuilder application, IWebHostEnvironment environment)
