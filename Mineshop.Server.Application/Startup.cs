@@ -22,11 +22,7 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        #region Services
-
         services.AddControllers();
-
-        #endregion
 
         #region Mapper
 
@@ -79,6 +75,8 @@ public class Startup
     {
         if (environment.IsDevelopment()) application.UseDeveloperExceptionPage();
 
+        #region Swagger
+
         application.UseSwagger();
         application.UseSwaggerUI(options =>
         {
@@ -86,11 +84,16 @@ public class Startup
             options.RoutePrefix = string.Empty;
         });
 
-        application.UseRouting();
+        #endregion
 
+        #region Routing
+
+        application.UseRouting();
         application.UseEndpoints(endpoints =>
         {
             endpoints.MapControllers();
         });
+
+        #endregion
     }
 }
