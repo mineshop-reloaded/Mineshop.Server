@@ -2,11 +2,11 @@ namespace Mineshop.Server.Application;
 
 internal static class Program
 {
-    public static async Task Main(string[] args)
+    public static void Main(string[] args)
     {
-        await CreateHostBuilder(args)
+        CreateHostBuilder(args)
             .Build()
-            .RunAsync();
+            .Run();
     }
 
     private static IHostBuilder CreateHostBuilder(string[] args)

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Reflection;
+using AutoMapper;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Interfaces;
@@ -64,6 +65,11 @@ public class Startup
                 Title = "Mineshop API",
                 Version = "v1"
             });
+
+            options.IncludeXmlComments(Path.Combine(
+                AppContext.BaseDirectory,
+                $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"
+            ));
         });
 
         #endregion
@@ -77,6 +83,7 @@ public class Startup
         application.UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mineshop API");
+            options.RoutePrefix = string.Empty;
         });
 
         application.UseRouting();

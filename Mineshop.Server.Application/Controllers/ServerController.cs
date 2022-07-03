@@ -20,6 +20,11 @@ public class ServerController : ControllerBase
         _serverService = serverService;
     }
 
+    /// <summary>
+    /// Encontra um servidor pelo seu identificador
+    /// </summary>
+    /// <param name="identifier"></param>
+    /// <returns>Servidor encontrado</returns>
     [Route("{identifier:guid}")]
     [HttpGet]
     public async Task<IActionResult> Get([FromRoute] Guid identifier)
@@ -28,6 +33,30 @@ public class ServerController : ControllerBase
         return viewModel != null ? Ok(viewModel) : NotFound();
     }
 
+    /// <summary>
+    /// Lista todos os servidores existentes
+    /// </summary>
+    /// <returns>Lista de servidores</returns>
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var viewModelList = await _serverService.GetAll();
+        return Ok(viewModelList);
+    }
+
+    /// <summary>
+    /// Cria um novo servidor
+    /// </summary>
+    /// <remarks>
+    /// Exemplo de requisição:
+    ///
+    ///     POST /api/server
+    ///     {
+    ///        "name": "Server 1"
+    ///     }
+    /// </remarks>
+    /// <param name="request"></param>
+    /// <returns>Servidor criado</returns>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PostServerRequestViewModel request)
     {
