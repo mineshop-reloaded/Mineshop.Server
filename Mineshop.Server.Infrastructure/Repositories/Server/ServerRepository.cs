@@ -1,9 +1,9 @@
-﻿using Mineshop.Server.Domain.Domains;
-using Infrastructure.Context;
-using Infrastructure.Repositories.Interfaces;
+﻿using Infrastructure.Context;
+using Infrastructure.Repositories.Interfaces.Server;
 using Microsoft.EntityFrameworkCore;
+using Mineshop.Server.Domain.Domains.Server;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.Repositories.Server;
 
 public class ServerRepository : MineshopRepository<ServerEntity>, IServerRepository
 {

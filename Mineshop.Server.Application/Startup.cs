@@ -1,13 +1,17 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using Infrastructure.Context;
-using Infrastructure.Repositories;
-using Infrastructure.Repositories.Interfaces;
+using Infrastructure.Repositories.Category;
+using Infrastructure.Repositories.Interfaces.Category;
+using Infrastructure.Repositories.Interfaces.Server;
+using Infrastructure.Repositories.Server;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Mineshop.Server.Application.Mappers;
-using Mineshop.Server.Service.Services;
-using Mineshop.Server.Service.Services.Interfaces;
+using Mineshop.Server.Service.Services.Category;
+using Mineshop.Server.Service.Services.Interfaces.Category;
+using Mineshop.Server.Service.Services.Interfaces.Server;
+using Mineshop.Server.Service.Services.Server;
 
 namespace Mineshop.Server.Application;
 
@@ -29,10 +33,10 @@ public class Startup
         var mapperConfiguration = new MapperConfiguration(configuration =>
         {
             configuration.AddProfile<ServerMapper>();
+            configuration.AddProfile<CategoryMapper>();
         });
 
-        var mapper = mapperConfiguration.CreateMapper();
-        services.AddSingleton(mapper);
+        services.AddSingleton(mapperConfiguration.CreateMapper());
 
         #endregion
 
@@ -47,8 +51,11 @@ public class Startup
 
         #region Dependency Injection
 
-        services.AddScoped<IServerService, ServerService>();
         services.AddScoped<IServerRepository, ServerRepository>();
+        services.AddScoped<IServerService, ServerService>();
+
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         #endregion
 

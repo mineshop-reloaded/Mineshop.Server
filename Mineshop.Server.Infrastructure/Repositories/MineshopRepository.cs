@@ -1,8 +1,8 @@
 ﻿using System.Linq.Expressions;
-using Mineshop.Server.Domain.Entity;
 using Infrastructure.Context;
 using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Mineshop.Server.Domain.Entity;
 
 namespace Infrastructure.Repositories;
 
@@ -58,5 +58,11 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
         return Context.Set<T>()
             .AsNoTracking()
             .AnyAsync(predicate);
+    }
+
+    public IQueryable<T> Queryable()
+    {
+        return Context.Set<T>()
+            .AsQueryable();
     }
 }

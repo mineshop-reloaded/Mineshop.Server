@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Mineshop.Server.Domain.Domains;
 using Mineshop.Server.Model.Models.Server;
-using Mineshop.Server.Service.Services.Interfaces;
+using Mineshop.Server.Service.Services.Interfaces.Server;
 
-namespace Mineshop.Server.Application.Controllers;
+namespace Mineshop.Server.Application.Controllers.Server;
 
 [Route("api/server")]
 [ApiController]
@@ -12,16 +11,16 @@ public class ServerController : ControllerBase
 {
     private readonly IMapper _mapper;
 
-    private readonly IServerService _serverService;
+    private readonly IServerService _service;
 
-    public ServerController(IMapper mapper, IServerService serverService)
+    public ServerController(IMapper mapper, IServerService service)
     {
         _mapper = mapper;
-        _serverService = serverService;
+        _service = service;
     }
 
     /// <summary>
-    /// Encontra um servidor pelo seu identificador
+    ///     Encontra um servidor pelo seu identificador
     /// </summary>
     /// <param name="identifier"></param>
     /// <returns>Servidor encontrado</returns>
@@ -29,38 +28,29 @@ public class ServerController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> Get([FromRoute] Guid identifier)
     {
-        var viewModel = await _serverService.GetByIdentifier(identifier);
+        var viewModel = await _service.GetByIdentifier(identifier);
         return viewModel != null ? Ok(viewModel) : NotFound();
     }
 
     /// <summary>
-    /// Lista todos os servidores existentes
+    ///     Procurar por servidores
     /// </summary>
     /// <returns>Lista de servidores</returns>
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> SearchAll([FromQuery] SearchServerViewModel search)
     {
-        var viewModelList = await _serverService.GetAll();
-        return Ok(viewModelList);
+        return Ok(await _service.SearchAll(search));
     }
 
     /// <summary>
-    /// Cria um novo servidor
+    ///     Cria um novo servidor
     /// </summary>
-    /// <remarks>
-    /// Exemplo de requisição:
-    ///
-    ///     POST /api/server
-    ///     {
-    ///        "name": "Server 1"
-    ///     }
-    /// </remarks>
     /// <param name="request"></param>
     /// <returns>Servidor criado</returns>
     [HttpPost]
     public async Task<IActionResult> Post([FromBody] PostServerRequestViewModel request)
     {
         var viewModel = _mapper.Map<ServerViewModel>(request);
-        return CreatedAtAction(nameof(Post), await _serverService.Create(viewModel));
+        return CreatedAtAction(nameof(Post), await _service.Create(viewModel));
     }
 }

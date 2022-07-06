@@ -1,6 +1,6 @@
-﻿using Mineshop.Server.Domain.Domains;
+﻿using Mineshop.Server.Domain.Domains.Server;
 
-namespace Infrastructure.Repositories.Interfaces;
+namespace Infrastructure.Repositories.Interfaces.Server;
 
 public interface IServerRepository : IMineshopRepository<ServerEntity>
 {

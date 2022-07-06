@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Mineshop.Server.Domain.Entity;
 using Infrastructure.Repositories.Interfaces;
+using Mineshop.Server.Domain.Entity;
 using Mineshop.Server.Model.Models;
 using Mineshop.Server.Service.Services.Interfaces;
 

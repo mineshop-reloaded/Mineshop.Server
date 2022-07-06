@@ -1,9 +1,9 @@
-﻿using Mineshop.Server.Domain.Domains;
-using FluentValidation;
+﻿using FluentValidation;
+using Mineshop.Server.Domain.Domains.Server;
 
 namespace Mineshop.Server.Domain.Validators;
 
-public class ServerValidator : AbstractValidator<Domains.ServerEntity>
+public class ServerValidator : AbstractValidator<ServerEntity>
 {
     public ServerValidator()
     {
