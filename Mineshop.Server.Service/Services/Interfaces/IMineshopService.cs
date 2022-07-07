@@ -8,5 +8,5 @@ public interface IMineshopService<T> where T : MineshopModel
     Task<List<T>> GetAll();
     Task<T> Create(T model);
     Task<T> Update(T model);
-    Task Delete(Guid identifier);
+    Task<T?> Delete(Guid identifier);
 }

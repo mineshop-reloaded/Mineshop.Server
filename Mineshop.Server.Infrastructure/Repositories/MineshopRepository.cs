@@ -43,14 +43,15 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
         return entity;
     }
 
-    public virtual async Task Delete(Guid identifier)
+    public virtual async Task<T?> Delete(Guid identifier)
     {
         var mineshopEntity = await GetByIdentifier(identifier);
-        if (mineshopEntity != null)
-        {
-            Context.Remove(mineshopEntity);
-            await Context.SaveChangesAsync();
-        }
+        if (mineshopEntity == null) return null;
+
+        Context.Remove(mineshopEntity);
+        await Context.SaveChangesAsync();
+        return mineshopEntity;
+
     }
 
     public Task<bool> Contains(Expression<Func<T, bool>> predicate)

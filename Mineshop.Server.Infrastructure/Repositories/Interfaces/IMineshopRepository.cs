@@ -9,7 +9,7 @@ public interface IMineshopRepository<T> where T : MineshopEntity
     Task<List<T>> GetAll();
     Task<T> Create(T entity);
     Task<T> Update(T entity);
-    Task Delete(Guid identifier);
+    Task<T?> Delete(Guid identifier);
     Task<bool> Contains(Expression<Func<T, bool>> predicate);
     IQueryable<T> Queryable();
 }

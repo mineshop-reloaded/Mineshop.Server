@@ -32,9 +32,9 @@ public abstract class MineshopService<T, TE> : IMineshopService<T>
         return _mapper.Map<List<T>>(mineshopEntities);
     }
 
-    public virtual async Task Delete(Guid identifier)
+    public virtual async Task<T?> Delete(Guid identifier)
     {
-        await _repository.Delete(identifier);
+        return _mapper.Map<T?>(await _repository.Delete(identifier));
     }
 
     public abstract Task<T> Create(T model);

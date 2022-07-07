@@ -20,12 +20,9 @@ public class ServerController : ControllerBase
     }
 
     /// <summary>
-    ///     Encontra um servidor pelo seu identificador
+    ///     Procurar um servidor pelo seu identificador
     /// </summary>
-    /// <param name="identifier"></param>
-    /// <returns>Servidor encontrado</returns>
-    [Route("{identifier:guid}")]
-    [HttpGet]
+    [HttpGet("{identifier:guid}")]
     public async Task<IActionResult> Get([FromRoute] Guid identifier)
     {
         var viewModel = await _service.GetByIdentifier(identifier);
@@ -33,10 +30,9 @@ public class ServerController : ControllerBase
     }
 
     /// <summary>
-    ///     Procurar por servidores
+    ///     Procurar por servidores usando um filtro
     /// </summary>
-    /// <returns>Lista de servidores</returns>
-    [HttpGet]
+    [HttpGet("")]
     public async Task<IActionResult> SearchAll([FromQuery] SearchServerViewModel search)
     {
         return Ok(await _service.SearchAll(search));
@@ -45,12 +41,20 @@ public class ServerController : ControllerBase
     /// <summary>
     ///     Cria um novo servidor
     /// </summary>
-    /// <param name="request"></param>
-    /// <returns>Servidor criado</returns>
-    [HttpPost]
+    [HttpPost("")]
     public async Task<IActionResult> Post([FromBody] PostServerRequestViewModel request)
     {
         var viewModel = _mapper.Map<ServerViewModel>(request);
         return CreatedAtAction(nameof(Post), await _service.Create(viewModel));
+    }
+
+    /// <summary>
+    ///     Deleta um servidor pelo seu identificador
+    /// </summary>
+    [HttpDelete("{identifier:guid}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid identifier)
+    {
+        var viewModel = await _service.Delete(identifier);
+        return viewModel != null ? Ok(viewModel) : NotFound();
     }
 }

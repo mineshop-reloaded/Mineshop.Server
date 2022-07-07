@@ -20,12 +20,9 @@ public class CategoryController : ControllerBase
     }
 
     /// <summary>
-    ///     Encontra uma categoria pelo seu identificador
+    ///     Procurar uma categoria pelo seu identificador
     /// </summary>
-    /// <param name="identifier"></param>
-    /// <returns>Categoria encontrada</returns>
-    [Route("{identifier:guid}")]
-    [HttpGet]
+    [HttpGet("{identifier:guid}")]
     public async Task<IActionResult> Get([FromRoute] Guid identifier)
     {
         var viewModel = await _service.GetByIdentifier(identifier);
@@ -33,10 +30,9 @@ public class CategoryController : ControllerBase
     }
 
     /// <summary>
-    ///     Procurar por categorias
+    ///     Procurar por categorias usando um filtro
     /// </summary>
-    /// <returns>Lista de categorias</returns>
-    [HttpGet]
+    [HttpGet("")]
     public async Task<IActionResult> SearchAll([FromQuery] SearchCategoryViewModel search)
     {
         return Ok(await _service.SearchAll(search));
@@ -45,12 +41,20 @@ public class CategoryController : ControllerBase
     /// <summary>
     ///     Cria uma nova categoria
     /// </summary>
-    /// <param name="request"></param>
-    /// <returns>Categoria criada</returns>
-    [HttpPost]
+    [HttpPost("")]
     public async Task<IActionResult> Post([FromBody] PostCategoryRequestViewModel request)
     {
         var viewModel = _mapper.Map<CategoryViewModel>(request);
         return CreatedAtAction(nameof(Post), await _service.Create(viewModel));
+    }
+    
+    /// <summary>
+    ///     Deleta uma categoria pelo seu identificador
+    /// </summary>
+    [HttpDelete("{identifier:guid}")]
+    public async Task<IActionResult> Delete([FromRoute] Guid identifier)
+    {
+        var viewModel = await _service.Delete(identifier);
+        return viewModel != null ? Ok(viewModel) : NotFound();
     }
 }
