@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mineshop.Server.Domain.Domains.Category;
-using Mineshop.Server.Domain.Domains.Server;
+using Mineshop.Server.Domain.Domains;
 
 namespace Infrastructure.Context;
 

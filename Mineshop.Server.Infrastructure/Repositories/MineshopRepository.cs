@@ -51,7 +51,6 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
         Context.Remove(mineshopEntity);
         await Context.SaveChangesAsync();
         return mineshopEntity;
-
     }
 
     public Task<bool> Contains(Expression<Func<T, bool>> predicate)

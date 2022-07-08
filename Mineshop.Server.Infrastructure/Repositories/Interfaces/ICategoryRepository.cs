@@ -1,6 +1,6 @@
-﻿using Mineshop.Server.Domain.Domains.Category;
+﻿using Mineshop.Server.Domain.Domains;
 
-namespace Infrastructure.Repositories.Interfaces.Category;
+namespace Infrastructure.Repositories.Interfaces;
 
 public interface ICategoryRepository : IMineshopRepository<CategoryEntity>
 {

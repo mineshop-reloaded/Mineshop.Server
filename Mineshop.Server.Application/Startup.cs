@@ -1,17 +1,13 @@
 ﻿using System.Reflection;
 using AutoMapper;
 using Infrastructure.Context;
-using Infrastructure.Repositories.Category;
-using Infrastructure.Repositories.Interfaces.Category;
-using Infrastructure.Repositories.Interfaces.Server;
-using Infrastructure.Repositories.Server;
+using Infrastructure.Repositories;
+using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Mineshop.Server.Application.Mappers;
-using Mineshop.Server.Service.Services.Category;
-using Mineshop.Server.Service.Services.Interfaces.Category;
-using Mineshop.Server.Service.Services.Interfaces.Server;
-using Mineshop.Server.Service.Services.Server;
+using Mineshop.Server.Service.Services;
+using Mineshop.Server.Service.Services.Interfaces;
 
 namespace Mineshop.Server.Application;
 

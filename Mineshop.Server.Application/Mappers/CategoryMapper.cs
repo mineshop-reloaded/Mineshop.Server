@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Mineshop.Server.Domain.Domains.Category;
+using Mineshop.Server.Domain.Domains;
 using Mineshop.Server.Model.Models.Category;
 
 namespace Mineshop.Server.Application.Mappers;

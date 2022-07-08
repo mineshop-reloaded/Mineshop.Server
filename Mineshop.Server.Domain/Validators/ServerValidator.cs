@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using Mineshop.Server.Domain.Domains.Server;
+using Mineshop.Server.Domain.Domains;
 
 namespace Mineshop.Server.Domain.Validators;
 

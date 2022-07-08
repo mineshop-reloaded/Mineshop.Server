@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using Infrastructure.Repositories.Interfaces.Category;
-using Infrastructure.Repositories.Interfaces.Server;
+using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Mineshop.Server.Domain.Domains.Category;
+using Mineshop.Server.Domain.Domains;
 using Mineshop.Server.Model.Models.Category;
-using Mineshop.Server.Service.Services.Interfaces.Category;
+using Mineshop.Server.Service.Services.Interfaces;
 
-namespace Mineshop.Server.Service.Services.Category;
+namespace Mineshop.Server.Service.Services;
 
 public class CategoryService :
     MineshopService<CategoryViewModel, CategoryEntity>,

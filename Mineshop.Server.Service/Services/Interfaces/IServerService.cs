@@ -1,6 +1,6 @@
 ﻿using Mineshop.Server.Model.Models.Server;
 
-namespace Mineshop.Server.Service.Services.Interfaces.Server;
+namespace Mineshop.Server.Service.Services.Interfaces;
 
 public interface IServerService : IMineshopService<ServerViewModel>
 {

@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations;
-using Mineshop.Server.Domain.Domains.Server;
 using Mineshop.Server.Domain.Entity;
 
-namespace Mineshop.Server.Domain.Domains.Category;
+namespace Mineshop.Server.Domain.Domains;
 
 public class CategoryEntity : MineshopEntity
 {

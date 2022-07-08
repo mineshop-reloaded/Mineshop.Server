@@ -1,6 +1,6 @@
 ﻿using Mineshop.Server.Model.Models.Category;
 
-namespace Mineshop.Server.Service.Services.Interfaces.Category;
+namespace Mineshop.Server.Service.Services.Interfaces;
 
 public interface ICategoryService : IMineshopService<CategoryViewModel>
 {

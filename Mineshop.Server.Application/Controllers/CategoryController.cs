@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mineshop.Server.Model.Models.Category;
-using Mineshop.Server.Service.Services.Interfaces.Category;
+using Mineshop.Server.Service.Services.Interfaces;
 
-namespace Mineshop.Server.Application.Controllers.Category;
+namespace Mineshop.Server.Application.Controllers;
 
 [Route("api/category")]
 [ApiController]
@@ -47,7 +47,7 @@ public class CategoryController : ControllerBase
         var viewModel = _mapper.Map<CategoryViewModel>(request);
         return CreatedAtAction(nameof(Post), await _service.Create(viewModel));
     }
-    
+
     /// <summary>
     ///     Deleta uma categoria pelo seu identificador
     /// </summary>

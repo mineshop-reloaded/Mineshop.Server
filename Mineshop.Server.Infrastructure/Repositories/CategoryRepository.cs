@@ -1,9 +1,9 @@
 ﻿using Infrastructure.Context;
-using Infrastructure.Repositories.Interfaces.Category;
+using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Mineshop.Server.Domain.Domains.Category;
+using Mineshop.Server.Domain.Domains;
 
-namespace Infrastructure.Repositories.Category;
+namespace Infrastructure.Repositories;
 
 public class CategoryRepository : MineshopRepository<CategoryEntity>, ICategoryRepository
 {

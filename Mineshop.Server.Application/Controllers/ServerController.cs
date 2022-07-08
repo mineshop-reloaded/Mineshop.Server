@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Mineshop.Server.Model.Models.Server;
-using Mineshop.Server.Service.Services.Interfaces.Server;
+using Mineshop.Server.Service.Services.Interfaces;
 
-namespace Mineshop.Server.Application.Controllers.Server;
+namespace Mineshop.Server.Application.Controllers;
 
 [Route("api/server")]
 [ApiController]

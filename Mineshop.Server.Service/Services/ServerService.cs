@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using Infrastructure.Repositories.Interfaces.Server;
+using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Mineshop.Server.Domain.Domains.Server;
+using Mineshop.Server.Domain.Domains;
 using Mineshop.Server.Model.Models.Server;
-using Mineshop.Server.Service.Services.Interfaces.Server;
+using Mineshop.Server.Service.Services.Interfaces;
 
-namespace Mineshop.Server.Service.Services.Server;
+namespace Mineshop.Server.Service.Services;
 
 public class ServerService :
     MineshopService<ServerViewModel, ServerEntity>,
