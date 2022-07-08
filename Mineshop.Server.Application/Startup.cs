@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Mineshop.Server.Application.Mappers;
 using Mineshop.Server.Service.Services;
 using Mineshop.Server.Service.Services.Interfaces;
+using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Mineshop.Server.Application;
 
@@ -38,6 +39,7 @@ public class Startup
 
         #region Database Connection
 
+        services.AddTransient<MineshopContext>();
         services.AddDbContext<MineshopContext>(options =>
         {
             options.UseNpgsql(Configuration.GetConnectionString("Default"));
@@ -84,6 +86,7 @@ public class Startup
         application.UseSwaggerUI(options =>
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "Mineshop API");
+            options.DocExpansion(DocExpansion.None);
             options.RoutePrefix = string.Empty;
         });
 

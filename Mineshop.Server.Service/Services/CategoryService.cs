@@ -51,6 +51,11 @@ public class CategoryService :
         var queryable = _repository.Queryable()
             .AsNoTracking();
 
+        if (search.ServerIdentifier != null)
+        {
+            queryable = queryable.Where(x => x.ServerIdentifier == search.ServerIdentifier);
+        }
+        
         if (search.Name != null)
         {
             queryable = queryable.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
