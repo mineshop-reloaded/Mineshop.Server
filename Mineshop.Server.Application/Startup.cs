@@ -31,6 +31,7 @@ public class Startup
         {
             configuration.AddProfile<ServerMapper>();
             configuration.AddProfile<CategoryMapper>();
+            configuration.AddProfile<ProductMapper>();
         });
 
         services.AddSingleton(mapperConfiguration.CreateMapper());
@@ -54,6 +55,9 @@ public class Startup
 
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ICategoryService, CategoryService>();
+
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IProductService, ProductService>();
 
         #endregion
 

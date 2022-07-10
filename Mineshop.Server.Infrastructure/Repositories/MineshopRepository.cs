@@ -22,6 +22,17 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
             .FirstOrDefaultAsync(x => x.Identifier == identifier);
     }
 
+    public async Task<T> GetAndAssertByIdentifier(Guid identifier)
+    {
+        var entityByIdentifier = await GetByIdentifier(identifier);
+        if (entityByIdentifier == null)
+        {
+            throw new ArgumentException($"{typeof(T).Name} with identifier {identifier} does not exist");
+        }
+
+        return entityByIdentifier;
+    }
+
     public virtual async Task<List<T>> GetAll()
     {
         return await Context.Set<T>()
@@ -58,6 +69,14 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
         return Context.Set<T>()
             .AsNoTracking()
             .AnyAsync(predicate);
+    }
+
+    public async void AssertIfNotExists(Guid identifier)
+    {
+        if (!await Contains(x => x.Identifier == identifier))
+        {
+            throw new ArgumentException($"{typeof(T).Name} with identifier {identifier} does not exist");
+        }
     }
 
     public IQueryable<T> Queryable()

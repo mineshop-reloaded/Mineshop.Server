@@ -1,26 +1,26 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Mineshop.Server.Model.Models.Server;
+using Mineshop.Server.Model.Models.Product;
 using Mineshop.Server.Service.Services.Interfaces;
 
 namespace Mineshop.Server.Application.Controllers;
 
-[Route("api/server")]
+[Route("api/product")]
 [ApiController]
-public class ServerController : ControllerBase
+public class ProductController : ControllerBase
 {
     private readonly IMapper _mapper;
 
-    private readonly IServerService _service;
+    private readonly IProductService _service;
 
-    public ServerController(IMapper mapper, IServerService service)
+    public ProductController(IMapper mapper, IProductService service)
     {
         _mapper = mapper;
         _service = service;
     }
 
     /// <summary>
-    ///     Procurar um servidor pelo seu identificador
+    ///     Procurar um product pelo seu identificador
     /// </summary>
     [HttpGet("{identifier:guid}")]
     public async Task<IActionResult> Get([FromRoute] Guid identifier)
@@ -30,26 +30,26 @@ public class ServerController : ControllerBase
     }
 
     /// <summary>
-    ///     Procurar por servidores usando um filtro
+    ///     Procurar por produtos usando um filtro
     /// </summary>
     [HttpGet("")]
-    public async Task<IActionResult> SearchAll([FromQuery] SearchServerViewModel search)
+    public async Task<IActionResult> SearchAll([FromQuery] SearchProductViewModel search)
     {
         return Ok(await _service.SearchAll(search));
     }
 
     /// <summary>
-    ///     Criar um novo servidor
+    ///     Criar um novo produto
     /// </summary>
     [HttpPost("")]
-    public async Task<IActionResult> Post([FromBody] PostServerRequestViewModel request)
+    public async Task<IActionResult> Post([FromBody] PostProductRequestViewModel request)
     {
-        var viewModel = _mapper.Map<ServerViewModel>(request);
+        var viewModel = _mapper.Map<ProductViewModel>(request);
         return CreatedAtAction(nameof(Post), await _service.Create(viewModel));
     }
 
     /// <summary>
-    ///     Deletar um servidor pelo seu identificador
+    ///     Deletar um produto pelo seu identificador
     /// </summary>
     [HttpDelete("{identifier:guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid identifier)
