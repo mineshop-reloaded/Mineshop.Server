@@ -23,18 +23,13 @@ public class ServerService :
 
     public override async Task<ServerViewModel> Create(ServerViewModel viewModel)
     {
-        if (await _repository.Contains(x => x.Name == viewModel.Name))
-            throw new ArgumentException("Server with this name already exists");
-
         var entity = _mapper.Map<ServerEntity>(viewModel);
         return _mapper.Map<ServerViewModel>(await _repository.Create(entity));
     }
 
     public override async Task<ServerViewModel> Update(ServerViewModel viewModel)
     {
-        var entityByIdentifier = await _repository.GetByIdentifier(viewModel.Identifier);
-        if (entityByIdentifier == null) throw new ArgumentException("Server with this identifier does not exist");
-
+        var entityByIdentifier = await _repository.GetAndAssertByIdentifier(viewModel.Identifier);
         return _mapper.Map<ServerViewModel>(await _repository.Update(entityByIdentifier));
     }
 
@@ -43,16 +38,11 @@ public class ServerService :
         var queryable = _repository.Queryable()
             .AsNoTracking();
 
-        if (!string.IsNullOrEmpty(search?.Name))
+        if (!string.IsNullOrEmpty(search.Name))
         {
             queryable = queryable.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
         }
 
         return _mapper.Map<List<ServerViewModel>>(await queryable.ToListAsync());
-    }
-
-    public async Task<ServerViewModel?> GetByName(string name)
-    {
-        return _mapper.Map<ServerViewModel>(await _repository.GetByName(name));
     }
 }

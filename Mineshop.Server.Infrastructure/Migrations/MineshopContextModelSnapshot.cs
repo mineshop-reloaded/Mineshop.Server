@@ -22,14 +22,15 @@ namespace Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Mineshop.Server.Domain.Domains.Category.CategoryEntity", b =>
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.CategoryEntity", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text");
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,7 +47,84 @@ namespace Infrastructure.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("Mineshop.Server.Domain.Domains.Server.ServerEntity", b =>
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.PaymentEntity", b =>
+                {
+                    b.Property<Guid>("Identifier")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MinecraftPlayer")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)");
+
+                    b.Property<int>("PaymentGateway")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PaymentStatus")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Identifier");
+
+                    b.ToTable("Payments");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.PaymentProductEntity", b =>
+                {
+                    b.Property<Guid>("Identifier")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PaymentIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ProductIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Identifier");
+
+                    b.HasIndex("PaymentIdentifier");
+
+                    b.HasIndex("ProductIdentifier");
+
+                    b.ToTable("PaymentProducts");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.ProductEntity", b =>
+                {
+                    b.Property<Guid>("Identifier")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryIdentifier")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Identifier");
+
+                    b.HasIndex("CategoryIdentifier");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.ServerEntity", b =>
                 {
                     b.Property<Guid>("Identifier")
                         .ValueGeneratedOnAdd()
@@ -62,15 +140,50 @@ namespace Infrastructure.Migrations
                     b.ToTable("Servers");
                 });
 
-            modelBuilder.Entity("Mineshop.Server.Domain.Domains.Category.CategoryEntity", b =>
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.CategoryEntity", b =>
                 {
-                    b.HasOne("Mineshop.Server.Domain.Domains.Server.ServerEntity", "Server")
+                    b.HasOne("Mineshop.Server.Domain.Domains.ServerEntity", "Server")
                         .WithMany()
                         .HasForeignKey("ServerIdentifier")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Server");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.PaymentProductEntity", b =>
+                {
+                    b.HasOne("Mineshop.Server.Domain.Domains.PaymentEntity", "Payment")
+                        .WithMany("Products")
+                        .HasForeignKey("PaymentIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Mineshop.Server.Domain.Domains.ProductEntity", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Payment");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.ProductEntity", b =>
+                {
+                    b.HasOne("Mineshop.Server.Domain.Domains.CategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryIdentifier")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Mineshop.Server.Domain.Domains.PaymentEntity", b =>
+                {
+                    b.Navigation("Products");
                 });
 #pragma warning restore 612, 618
         }

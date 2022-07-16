@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\Mineshop.Server.Domain\Mineshop.Server.Domain.csproj"/>
+    </ItemGroup>
+
 </Project>

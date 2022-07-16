@@ -39,7 +39,7 @@ public class CategoryController : ControllerBase
     }
 
     /// <summary>
-    ///     Cria uma nova categoria
+    ///     Criar uma nova categoria
     /// </summary>
     [HttpPost("")]
     public async Task<IActionResult> Post([FromBody] PostCategoryRequestViewModel request)
@@ -49,7 +49,7 @@ public class CategoryController : ControllerBase
     }
 
     /// <summary>
-    ///     Deleta uma categoria pelo seu identificador
+    ///     Deletar uma categoria pelo seu identificador
     /// </summary>
     [HttpDelete("{identifier:guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid identifier)

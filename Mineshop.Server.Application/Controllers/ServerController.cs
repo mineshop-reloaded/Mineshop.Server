@@ -39,7 +39,7 @@ public class ServerController : ControllerBase
     }
 
     /// <summary>
-    ///     Cria um novo servidor
+    ///     Criar um novo servidor
     /// </summary>
     [HttpPost("")]
     public async Task<IActionResult> Post([FromBody] PostServerRequestViewModel request)
@@ -49,7 +49,7 @@ public class ServerController : ControllerBase
     }
 
     /// <summary>
-    ///     Deleta um servidor pelo seu identificador
+    ///     Deletar um servidor pelo seu identificador
     /// </summary>
     [HttpDelete("{identifier:guid}")]
     public async Task<IActionResult> Delete([FromRoute] Guid identifier)

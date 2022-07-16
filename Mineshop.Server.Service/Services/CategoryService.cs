@@ -30,7 +30,7 @@ public class CategoryService :
 
     public override async Task<CategoryViewModel> Create(CategoryViewModel viewModel)
     {
-        AssertIfServerExists(viewModel.ServerIdentifier);
+        await _serverRepository.GetAndAssertByIdentifier(viewModel.ServerIdentifier);
 
         var entity = _mapper.Map<CategoryEntity>(viewModel);
         return _mapper.Map<CategoryViewModel>(await _repository.Create(entity));
@@ -38,11 +38,9 @@ public class CategoryService :
 
     public override async Task<CategoryViewModel> Update(CategoryViewModel viewModel)
     {
-        AssertIfServerExists(viewModel.ServerIdentifier);
+        await _serverRepository.GetAndAssertByIdentifier(viewModel.ServerIdentifier);
 
-        var entityByIdentifier = await _repository.GetByIdentifier(viewModel.Identifier);
-        if (entityByIdentifier == null) throw new ArgumentException("Category with this identifier does not exist");
-
+        var entityByIdentifier = await _repository.GetAndAssertByIdentifier(viewModel.Identifier);
         return _mapper.Map<CategoryViewModel>(await _repository.Update(entityByIdentifier));
     }
 
@@ -55,13 +53,13 @@ public class CategoryService :
         {
             queryable = queryable.Where(x => x.ServerIdentifier == search.ServerIdentifier);
         }
-        
-        if (search.Name != null)
+
+        if (!string.IsNullOrEmpty(search.Name))
         {
             queryable = queryable.Where(x => x.Name.ToLower().Contains(search.Name.ToLower()));
         }
 
-        if (search.Description != null)
+        if (!string.IsNullOrEmpty(search.Description))
         {
             queryable = queryable
                 .Where(x =>
@@ -71,16 +69,5 @@ public class CategoryService :
         }
 
         return _mapper.Map<List<CategoryViewModel>>(await queryable.ToListAsync());
-    }
-
-    public async Task<CategoryViewModel?> GetByName(string name)
-    {
-        return _mapper.Map<CategoryViewModel>(await _repository.GetByName(name));
-    }
-
-    private async void AssertIfServerExists(Guid serverIdentifier)
-    {
-        if (await _serverRepository.GetByIdentifier(serverIdentifier) == null)
-            throw new ArgumentException("Server with this identifier does not exist");
     }
 }
