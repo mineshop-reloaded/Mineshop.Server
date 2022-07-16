@@ -5,5 +5,4 @@ namespace Mineshop.Server.Service.Services.Interfaces;
 public interface IServerService : IMineshopService<ServerViewModel>
 {
     Task<List<ServerViewModel>> SearchAll(SearchServerViewModel search);
-    Task<ServerViewModel?> GetByName(string name);
 }

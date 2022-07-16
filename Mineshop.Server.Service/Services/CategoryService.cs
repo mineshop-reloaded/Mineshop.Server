@@ -70,9 +70,4 @@ public class CategoryService :
 
         return _mapper.Map<List<CategoryViewModel>>(await queryable.ToListAsync());
     }
-
-    public async Task<CategoryViewModel?> GetByName(string name)
-    {
-        return _mapper.Map<CategoryViewModel>(await _repository.GetByName(name));
-    }
 }

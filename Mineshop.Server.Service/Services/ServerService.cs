@@ -45,9 +45,4 @@ public class ServerService :
 
         return _mapper.Map<List<ServerViewModel>>(await queryable.ToListAsync());
     }
-
-    public async Task<ServerViewModel?> GetByName(string name)
-    {
-        return _mapper.Map<ServerViewModel>(await _repository.GetByName(name));
-    }
 }

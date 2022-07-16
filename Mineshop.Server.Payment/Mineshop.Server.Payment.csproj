@@ -8,6 +8,12 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Mineshop.Server.Domain\Mineshop.Server.Domain.csproj"/>
+        <ProjectReference Include="..\Mineshop.Server.Infrastructure\Mineshop.Server.Infrastructure.csproj"/>
+        <ProjectReference Include="..\Mineshop.Server.Model\Mineshop.Server.Model.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Stripe.net" Version="39.122.0"/>
     </ItemGroup>
 
 </Project>

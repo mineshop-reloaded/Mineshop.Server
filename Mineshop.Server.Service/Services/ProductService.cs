@@ -11,11 +11,11 @@ public class ProductService :
     MineshopService<ProductViewModel, ProductEntity>,
     IProductService
 {
+    private readonly ICategoryRepository _categoryRepository;
+
     private readonly IMapper _mapper;
 
     private readonly IProductRepository _repository;
-
-    private readonly ICategoryRepository _categoryRepository;
 
     public ProductService(
         IMapper mapper,
@@ -69,10 +69,5 @@ public class ProductService :
         }
 
         return _mapper.Map<List<ProductViewModel>>(await queryable.ToListAsync());
-    }
-
-    public async Task<ProductViewModel?> GetByName(string name)
-    {
-        return _mapper.Map<ProductViewModel>(await _repository.GetByName(name));
     }
 }

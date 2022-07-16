@@ -12,6 +12,6 @@ public interface IMineshopRepository<T> where T : MineshopEntity
     Task<T> Update(T entity);
     Task<T?> Delete(Guid identifier);
     Task<bool> Contains(Expression<Func<T, bool>> predicate);
-    void AssertIfNotExists(Guid identifier);
+    Task AssertIfNotExists(Guid identifier);
     IQueryable<T> Queryable();
 }

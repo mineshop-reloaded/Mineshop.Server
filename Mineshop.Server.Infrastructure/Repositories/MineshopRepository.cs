@@ -71,7 +71,7 @@ public class MineshopRepository<T> : IMineshopRepository<T> where T : MineshopEn
             .AnyAsync(predicate);
     }
 
-    public async void AssertIfNotExists(Guid identifier)
+    public async Task AssertIfNotExists(Guid identifier)
     {
         if (!await Contains(x => x.Identifier == identifier))
         {
