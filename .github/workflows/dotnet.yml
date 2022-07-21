@@ -2,17 +2,11 @@
 
 on:
   push:
-    branches:
-      - "main"
-    paths:
-      - '**.cs'
-      - '**.csproj'
+    branches: ["main", "development"]
+    paths: ['**.cs', '**.csproj']
   pull_request:
-    branches:
-      - "main"
-    paths:
-      - '**.cs'
-      - '**.csproj'
+    branches: ["main", "development"]
+    paths: ['**.cs', '**.csproj']
 
 jobs:
   build_and_test:

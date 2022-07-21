@@ -3,9 +3,10 @@
   "profiles": {
     "Mineshop.Server.Application": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:5000",
+      "applicationUrl": "http://localhost:7777",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DATABASE_CONNECTION": "Server=localhost;Port=5432;Database=postgres;User Id=mineshop;Password=postgres;Search Path=mineshop;"
       }
     }
   }

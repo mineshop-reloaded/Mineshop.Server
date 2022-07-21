@@ -4,6 +4,9 @@ using AutoMapper;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Interfaces;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
+using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Mineshop.Server.Application.Mappers;
@@ -34,6 +37,17 @@ public class Startup
         services.AddControllers();
         services.AddOptions();
 
+        #region Data Protection
+
+        services.AddDataProtection()
+            .UseCryptographicAlgorithms(new AuthenticatedEncryptorConfiguration
+            {
+                EncryptionAlgorithm = EncryptionAlgorithm.AES_256_CBC,
+                ValidationAlgorithm = ValidationAlgorithm.HMACSHA256,
+            });
+
+        #endregion
+
         #region Mapper
 
         var mapperConfiguration = new MapperConfiguration(configuration =>
@@ -53,7 +67,8 @@ public class Startup
         services.AddTransient<MineshopContext>();
         services.AddDbContext<MineshopContext>(options =>
         {
-            options.UseNpgsql(Configuration.GetConnectionString("Default"));
+            options.UseNpgsql(Environment.GetEnvironmentVariable("DATABASE_CONNECTION")
+                              ?? Configuration.GetConnectionString("Default"));
         });
 
         #endregion
@@ -110,14 +125,18 @@ public class Startup
 
         #endregion
 
-        #region StripeConfiguration
+        #region Stripe Configuration
 
         var stripeConfiguration = Configuration.GetSection("Stripe");
-        StripeConfiguration.ApiKey = stripeConfiguration["ApiKey"];
+        StripeConfiguration.ApiKey = stripeConfiguration["ApiKey"]
+                                     ?? Environment.GetEnvironmentVariable("STRIPE_API_KEY")
+                                     ?? throw new Exception("STRIPE_API_KEY is not defined");
 
         services.Configure<StripeOptions>(options =>
         {
-            options.WebhookSigningKey = stripeConfiguration["WebhookSigningKey"];
+            options.WebhookSigningKey = stripeConfiguration["WebhookSigningKey"]
+                                        ?? Environment.GetEnvironmentVariable("STRIPE_WEBHOOK_SIGNING_KEY")
+                                        ?? throw new Exception("STRIPE_WEBHOOK_SIGNING_KEY is not defined");
         });
 
         #endregion
@@ -142,10 +161,7 @@ public class Startup
         #region Routing
 
         application.UseRouting();
-        application.UseEndpoints(endpoints =>
-        {
-            endpoints.MapControllers();
-        });
+        application.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
         #endregion
     }

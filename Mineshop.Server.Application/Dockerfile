@@ -20,6 +20,12 @@ FROM build AS publish
 RUN dotnet publish "Mineshop.Server.Application.csproj" -c Release -o /application/publish
 
 FROM base AS final
+
+ENV DATABASE_CONNECTION ""
+
+ENV STRIPE_API_KEY ""
+ENV STRIPE_WEBHOOK_SIGNING_KEY ""
+
 WORKDIR /application
 COPY --from=publish /application/publish .
 ENTRYPOINT ["dotnet", "Mineshop.Server.Application.dll"]
